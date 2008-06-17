@@ -27,5 +27,5 @@ Yes. Full WP Translit page in Serbian Cyrillic script is placed on my blog [Zapi
 
 == Screenshots ==
 
-1. This is `WP Translit (list)` widget
-2. This is `WP Translit (links)` widget
+1. Added widgets in Admin panel
+2. Widget `WP Translit (list)` and `WP Translit (links)` in action

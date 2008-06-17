@@ -1,0 +1,9 @@
+2008-06-17  Aleksandar Urošević <urke@users.sourceforge.net>
+
+        * Adding first version to WordPress SVN
+        * Changed first option title to „изворно (ћирилица)“
+        * Enabled YUSCII to Latin script conversion
+
+2008-06-16  Aleksandar Urošević <urke@users.sourceforge.net>
+
+        * Initial public release 0.3

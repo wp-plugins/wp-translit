@@ -1,12 +1,5 @@
 <?php
 /*
-Plugin Name: WP Translit
-Plugin URI: http://blog.urosevic.net/wp-translit/
-Description: Transliterate text from Serbian Cyrillic to Latin script in posts and pages. Use wptextureize filter to do job.
-Author: Aleksandar Urošević
-Version: 0.3.1
-Author URI: http://urosevic.net
-
     WP Translit transliterate Serbian Cyrillic to Latin script in WordPress blog's
     Copyright (C) 2008 Aleksandar Urošević <urke@users.sourceforge.net>
 
@@ -23,182 +16,362 @@ Author URI: http://urosevic.net
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Thanks to: http://www.emanueleferonato.com/2008/02/15/how-to-create-a-wordpress-widget/
+Plugin Name: WP Translit
+Plugin URI: http://blog.urosevic.net/wp-translit/
+Description: Transliterate text from Serbian Cyrillic to Latin script in posts and pages.
+Author: Aleksandar Urošević
+Version: 0.3.5
+Author URI: http://urosevic.net
+
+Thanks to:
+	http://www.emanueleferonato.com/2008/02/15/how-to-create-a-wordpress-widget/
+	http://lonewolf-online.net/computers/wordpress/create-widgets-control-panels/
+	http://kimmo.suominen.com/sw/srlatin/
+	http://us3.php.net/ob_start
 */
 
-	add_action("plugins_loaded","init_wpt");
-	add_action("translit", "wpt_translit");
-	add_action("wpt_set_lang", "wpt_set_lang");
+	add_action("plugins_loaded", "init_wpt");
+	add_action("translit",       "wpt_translit");
+	add_action('init',           'wpt_textdomain');
 
 function init_wpt()
 {
-	register_sidebar_widget("WP Translit (links)", "wpt_translit_links_widget");
-	register_sidebar_widget("WP Translit (list)",  "wpt_translit_list_widget");
+	register_sidebar_widget("WP Translit", "wpt_widget");
+	register_widget_control("WP Translit", "wpt_widget_control");
+	// define dhr_lang only once, on init;
+	hdr_lang();
 }
 
-function wpt_translit_list_widget()
+function wpt_textdomain()
 {
-$uri_adresa = $_SERVER['REQUEST_URI'];
-if ( isset($_REQUEST['lng']) ) {
-	$wpt_lang = $_REQUEST['lng'];
-} else {
-	$wpt_lang = $_COOKIE["wpt_lang"];
-} 
-print <<<EOF
-	<!-- WP Translit Widget (list) -->
-		<li class="widget widget_wpt">
-			<h2 class="widgettitle">Писмо/Pismo</h2>
-<form action="${uri_adresa}" method="post">
-
-<select name="lng" id="lng" onchange="this.form.submit()">
-EOF;
-if ($wpt_lang != "lat" && $wpt_lang != "asc" || $wpt_lang == "cir") {
-	echo '<option value="cir" selected="selected">изворно (ћирилица)</option>';
-} else {
-	echo '<option value="cir">изворно (ћирилица)</option>';
+	load_plugin_textdomain( 'wpt', PLUGINDIR . '/' . dirname(plugin_basename(__FILE__)) . '/lang' );
 }
-if ($wpt_lang == "lat") {
-	echo '<option value="lat" selected="selected">latinica (sa kvačicama)</option>';
-} else {
-	echo '<option value="lat">latinica (sa kvačicama)</option>';
-}
-if ($wpt_lang == "asc") {
-	echo '<option value="asc" selected="selected">latinica (bez kvacica)</option>';
-} else {
-	echo '<option value="asc">latinica (bez kvacica)</option>';
-}
-print <<<EOF
-</select>
-
-</form>
-		</li>
-	<!-- /WP Translit Widget (list) -->
-EOF;
-}
-
-function wpt_translit_links_widget()
+	
+function wpt_widget_control()
 {
-if ( isset($_REQUEST['lng']) ) {
-	$wpt_lang = $_REQUEST['lng'];
-} else {
-	$wpt_lang = $_COOKIE["wpt_lang"];
-}
-	print <<<EOF
-	<!-- WP Translit Widget (links) -->
-		<li class="widget widget_links">
-			<h2 class="widgettitle">Писмо/Pismo</h2>
-			<ul>
-EOF;
-			if ( $wpt_lang != "cir" ) {
-				print '			<li><a href="?lng=cir">изворно (ћирилица)</a></li>';
-			} else {
-				print '			<li><strong>изворно (ћирилица)</strong></li>';
-			}
-			if ( $wpt_lang != "lat" ) {
-				print '			<li><a href="?lng=lat">latinica (sa kvačicama)</a></li>';
-			} else {
-				print '			<li><strong>latinica (sa kvačicama)</strong></li>';
-			}
-			if ( $wpt_lang != "asc" ) {
-				print '			<li><a href="?lng=asc">latinica (bez kvacica)</a></li>';
-			} else {
-				print '			<li><strong>latinica (bez kvacica)</strong></li>';
-			}
-print <<<EOF
-			</ul>
-		</li>
-	<!-- /WP Translit Widget (links) -->
-EOF;
-}
+	// Configuration panel for WP Translit Widget
+	$options = get_option("widget_wpt");
+	if (!is_array( $options ))
+	{
+		$options = array(
+		'title' => 'Избор писма',
+		'style' => 'list',
+		'float' => 'single,page'
+		);
+	}
 
-function wpt_set_lang() {
-$lng = "";
-$wpt_lang = "";
-		if ( isset($_REQUEST['lng']) ) {
-			$wpt_lang = $_REQUEST['lng'];
-			if ( $wpt_lang == "cir" || $wpt_lang == "lat" | $wpt_lang == "asc" ) {
-				setcookie("wpt_lang", $wpt_lang, strtotime("+3 months"), "/");
+	if ($_POST['wpt-Submit'])
+	{
+		$options['title'] = htmlspecialchars($_POST['wpt-wTitle']);
+		$options['style'] = htmlspecialchars($_POST['wpt-wStyle']);
+		$wFloat = $_POST["wpt-wFloat"];
+		if ( is_array( $wFloat ) ) {
+			foreach ( $wFloat as $wf_page )
+                        {
+				$tmp .= $wf_page.",";
 			}
+			$wFloat = substr($tmp, 0, -1);
 		}
+		$options['float'] = $wFloat;
+		update_option("widget_wpt", $options);
+	}
+
+	// Form generator
+	$wf_float = explode(",", $options['float']);
+	?>
+	<p>
+	<label for="wpt-wTitle"><?php _e('Title', 'wpt'); ?>: </label><br />
+	<input type="text" id="wpt-wTitle" name="wpt-wTitle" value="<?php echo $options['title'];?>" /><br /><br />
+	<label for="wpt-wStyle"><?php _e('Style', 'wpt'); ?>: </label><br />
+	<input type="radio" id="wpt-wStyle" name="wpt-wStyle" value="list" <?php if ( $options['style'] == "list" ) { echo "checked"; } ?>/> <?php _e('Dropdown list', 'wpt'); ?><br/>
+	<input type="radio" id="wpt-wStyle" name="wpt-wStyle" value="links" <?php if ( $options['style'] == "links" ) { echo "checked"; } ?>/> <?php _e('Unordered list', 'wpt'); ?><br/><br/>
+	<label for="wpt-wFloat" name="wpt-wFloat"><?php _e('Floating widget', 'wpt'); ?>:<br/><em>(<?php _e("on which page to display floating widget", 'wpt'); ?>)</em></label><br />
+	<input type="checkbox" id="wpt-wFloat" name="wpt-wFloat[]" value="home" <?php if ( in_array("home", $wf_float) ) { echo 'checked="yes"'; } ?> /> <?php _e('Home', 'wpt'); ?><br />
+	<input type="checkbox" id="wpt-wFloat" name="wpt-wFloat[]" value="single" <?php if ( in_array("single", $wf_float) ) { echo 'checked="yes"'; } ?> /> <?php _e('Single Post', 'wpt'); ?><br />
+	<input type="checkbox" id="wpt-wFloat" name="wpt-wFloat[]" value="page" <?php if ( in_array("page", $wf_float) ) { echo 'checked="yes"'; } ?> /> <?php _e('Page', 'wpt'); ?><br />
+	<input type="checkbox" id="wpt-wFloat" name="wpt-wFloat[]" value="arch" <?php if ( in_array("arch", $wf_float) ) { echo 'checked="yes"'; } ?> /> <?php _e('Archives', 'wpt'); ?><br />
+	<input type="checkbox" id="wpt-wFloat" name="wpt-wFloat[]" value="search" <?php if ( in_array("search", $wf_float) ) { echo 'checked="yes"'; } ?> /> <?php _e('Search', 'wpt'); ?><br />
+	<input type="hidden" id="wpt-Submit" name="wpt-Submit" value="1" />
+	</p>
+<?php
+} // function wpt_widget_control
+
+// Functions to print widget in sidebar
+function wpt_widget($args)
+{
+	extract($args);
+	
+	$options = get_option("widget_wpt");
+	if (!is_array( $options ))
+	{
+		$options = array(
+		'title' => 'Избор писма',
+		'style' => 'list',
+		'float' => 'single,page'
+		);
+	}
+
+	echo $before_widget;
+	echo $before_title;
+	echo $options['title'];
+	echo $after_title;
+
+	// Which wiget style to print out?
+	if ( $options['style'] == "list" )
+        {
+		wpt_widget_list();
+	} else {
+		wpt_widget_links();
+	}
+	echo $after_widget;
+}
+
+// Function to print floating widget
+function wpt_widget_float()
+{
+	$options = get_option("widget_wpt");
+	if (!is_array( $options ))
+	{
+		$options = array(
+		'title' => 'Избор писма',
+		'style' => 'list',
+		'float' => 'single,page'
+		);
+	}
+        $fw_out = 0;
+        // prvo ako treba podelim float u niz
+        if ( strpos($options['float'], ",") > 1 )
+        {
+                $float = explode(",", $options['float']);
+                foreach ( $float as $tmp )
+                {
+                        $fw_out = $fw_out + wpt_fwout($tmp);
+                }
+	} elseif ( strlen($options['float']) != 0 )
+        {
+                $fw_out = wpt_fwout($options['float']);
+	}
+
+        // at end print (ro not) floating widget
+        if ( $fw_out != 0 )
+        {
+                printf ('<div id="wpt_widget_float"><h2>%s</h2>', $options['title']);
+                // Which wiget style to print out?
+                if ( $options['style'] == "list" )
+                {
+                	wpt_widget_list();
+                } else {
+                	wpt_widget_links();
+                }
+                echo '</div>';
+        }
+} // function wpt_widget_float
+
+// Function to test if we need to print floating widget on current page style
+function wpt_fwout($page_type)
+{
+        $wpt_fwout = 0;
+	switch($page_type)
+        {
+		case "home":
+			if (is_home()) $wpt_fwout = 1;
+			break;
+		case "single":
+			if (is_single()) $wpt_fwout = 1;
+			break;
+		case "page":
+			if (is_page()) $wpt_fwout = 1;
+			break;
+		case "arch":
+			if (is_archive()) $wpt_fwout = 1;
+			break;
+		case "search":
+			if (is_search()) $wpt_fwout = 1;
+			break;
+                default:
+	}
+        return $wpt_fwout;
+} // function wpt_fwout($page_type)
+
+function wpt_widget_float_css()
+{
+print <<<EOF
+<!-- WP Translit flying widget style -->
+<style type="text/css" media="screen">
+#wpt_widget_float {
+	position: fixed;
+	top: 0;
+	right: 0;
+	border: none;
+	padding: 10px;
+	background: inherit !important;
+	color: #111;
+	text-align: left; }
+#wpt_widget_float h2 {
+	font-family: 'Lucida Grande', Verdana, Sans-Serif;
+	font-size: 1.2em;
+	margin-top: 0; padding-top: 0; }
+#wpt_widget_float ul, #wpt_widget_float ul li {
+	margin: 0 0 0 6px;
+	padding: 0; }
+fieldset { border: none !important; padding: 0 !important; margin: 0 !important; }
+</style>
+<!-- /WP Translit flying widget style -->
+
+EOF;
+}
+
+function wpt_widget_list()
+{
+	if ( isset($_REQUEST['lng']) ) {
+		$wpt_lang = $_REQUEST['lng'];
+	} elseif ( isset( $_COOKIE["wpt_lang"] ) ) {
+		$wpt_lang = $_COOKIE["wpt_lang"];
+	} else {
+		$wpt_lang = $GLOBALS['hdr_lang'];
+	}
+
+	switch($wpt_lang) {
+		case "lat": $lc1 = 'selected="selected"'; break;
+		default:    $cc1 = 'selected="selected"';
+	}
+
+	print <<<EOF
+<!-- WP Translit Widget (list) -->
+<form action="${uri_adresa}" method="post"><fieldset>
+<select name="lng" id="lng" onchange="this.form.submit()">
+<option value="cir" $cc1>ћирилица</option>
+<option value="lat" $lc1>latinica</option>
+</select>
+</fieldset></form>
+<!-- /WP Translit Widget (list) -->
+EOF;
+} // wpt_widget_list()
+
+function wpt_widget_links()
+{
+	if ( isset($_REQUEST['lng']) ) {
+		$wpt_lang = $_REQUEST['lng'];
+	} elseif ( isset($_COOKIE["wpt_lang"]) ) {
+		$wpt_lang = $_COOKIE["wpt_lang"];
+	} else {
+		$wpt_lang = $GLOBALS['hdr_lang'];
+	}
+	
+	$cc1 = '<a href="?lng=cir">';
+	$lc1 = '<a href="?lng=lat">';
+	$lc2 = $ac2 = $cc2 = "</a>";
+	
+	switch($wpt_lang) {
+		case "lat": $lc1 = '<strong>'; $lc2 = "</strong>"; break;
+		default:    $cc1 = '<strong>'; $cc2 = "</strong>";
+	}
+
+	print <<<EOF
+<!-- WP Translit Widget (links) -->
+<ul>
+<li>${cc1}ћирилица${cc2}</li>
+<li>${lc1}latinica${lc2}</li>
+</ul>
+<!-- /WP Translit Widget (links) -->
+EOF;
+} // wpt_widget_links()
+
+// Function to set language from request headers to cookies
+function wpt_set_lang()
+{
+	$lng = "";
+	$wpt_lang = "";
+
+	if ( isset($_REQUEST['lng']) )
+        {
+		$wpt_lang = $_REQUEST['lng'];
+		if ( $wpt_lang == "cir" || $wpt_lang == "lat" )
+                {
+			setcookie("wpt_lang", $wpt_lang, strtotime("+3 months"), "/");
+		}
+	}
 }
 
 class wp_translit
 {
-  function wp_translit()
-  {
-			global $wp_filter;
-			// go through all filters and add our style-fixer after wptexturize
-			foreach ($wp_filter as $tag => $filter) {
-				$found_wptxt = 0;
-				foreach ($wp_filter[$tag] as $priority => $functions) {
-					if (!is_null($functions)) {
-						foreach ($functions as $function) {
-							if ("wptexturize" == $function['function']) {
-								add_filter($tag, array(&$this, 'wptranslit'), $priority+1);
-								$found_wptxt = 1;
-								break;
-							}
-						}
-					}
-				}
-				if ($found_wptxt)
-					continue;
-			}
-  } //function z_tanslit()
-
-	function wptranslit($text) {
+	function wp_translit()
+	{
+		add_action('wp_head', array(&$this,'buffer_start'), 1);
+		add_action('wp_footer', array(&$this,'buffer_end'), 1);
+	}
+	
+	function buffer_start()
+	{
+		wpt_widget_float_css();
+		ob_start( array(&$this,"do_wptranslit") );
+		wpt_set_lang();
+	}
+	 
+	function buffer_end()
+	{
+		wpt_widget_float();
+		ob_end_flush();
+	}
+		
+	// Function to do replace of text
+	function do_wptranslit($text)
+        {
+		// set default script to 'cir' (put in widget setup?)
 		$wpt_lang = "cir";
-
-		// prvo pokupim postavku iz cookies
-		if ( isset($_COOKIE['wpt_lang']) ) {
-			$wpt_lang = $_COOKIE['wpt_lang'];
-		}
-		// ako nema cookies, proverim da li ima u REQUEST-u
-		if ( isset($_REQUEST['lng']) ) { 
+		
+		// get language from REQUEST (if 'lng' exists)
+		if ( isset($_REQUEST['lng']) )
+                { 
 			$wpt_lang = $_REQUEST['lng'];
 		}
+		// if no language in REQUEST, get language from cookies (if cookie 'wpt_lang' exists)
+		elseif ( isset($_COOKIE['wpt_lang']) )
+                {
+			$wpt_lang = $_COOKIE['wpt_lang'];
+		}
+		// if no wpt_lang in cookies, get Accept Language from headers
+		elseif ( $GLOBALS['hdr_lang'] )
+		{
+			$wpt_lang = $GLOBALS['hdr_lang'];
+		}
 
-		// ako wpt_lang nije "cir", onda će se odraditi transliteracija
-		if ( $wpt_lang == "lat" || $wpt_lang == "asc" ) {
+		// Do we even need to do transliteration (wpt_lang is 'lat')?
+		if ( $wpt_lang == "lat" )
+                {
 			$wpt_izlaz = "";
-			// cirilica
-			$str_from = array ("а","б","в","г","д","ђ","е","ж","з","и","ј","к","л","љ","м","н","њ","о","п","р","с","т","ћ","у","ф","х","ц","ч","џ","ш","А","Б","В","Г","Д","Ђ","Е","Ж","З","И","Ј","К","Л","Љ","М","Н","Њ","О","П","Р","С","Т","Ћ","У","Ф","Х","Ц","Ч","Џ","Ш","č","Č","ć","Ć","ž","Ž","đ","Đ","š","Š");
-
-			if ( $wpt_lang == "lat" ) {
-				// fake UTF-8 latinica
-				$str_to = array ("a","b","v","g","d","đ","e","ž","z","i","j","k","l","lj","m","n","nj","o","p","r","s","t","ć","u","f","h","c","č","dž","š","A","B","V","G","D","Đ","E","Ž","Z","I","J","K","L","Lj","M","N","Nj","O","P","R","S","T","Ć","U","F","H","C","Č","Dž","Š","č","Č","ć","Ć","ž","Ž","đ","Đ","š","Š");
-			} else if ( $wpt_lang == "asc" ) {
-				// ascii
-				$str_to = array ("a","b","v","g","d","dj","e","z","z","i","j","k","l","lj","m","n","nj","o","p","r","s","t","c","u","f","h","c","c","dz","s","A","B","V","G","D","Dj","E","Z","Z","I","J","K","L","Lj","M","N","Nj","O","P","R","S","T","C","U","F","H","C","C","Dz","S","c","C","c","C","z","Z","dj","Dj","s","S");
-			}
-
-			// Capture tags and everything inside them
-			$tarr = preg_split("/(<.*>)/Us", $text, -1, PREG_SPLIT_DELIM_CAPTURE);
-	
-			// loop stuff
-			$stop = count($tarr); $next = true;
-			for ($i = 0; $i < $stop; $i++) {
-		    $curl = $tarr[$i];			
-		    if (isset($curl{0}) && '<' != $curl{0} && $next) {
-				$curl = str_replace($str_from, $str_to, $curl);
-		    } elseif (strstr($curl, '<code') || strstr($curl, '<pre')
-					|| strstr($curl, '<kbd' || strstr($curl, '<style')
-					|| strstr($curl, '<script'))) {
-				// strstr is fast
-				$next = false;
-		    } else {
-				$next = true;
-		    }
-		    $wpt_izlaz .= $curl;
-			}
-//		$output = str_replace('<q>', '&#8222;<q>', $output);
-//		$output = str_replace('</q>', '</q>&#8220;', $output);
-			return $wpt_izlaz;
-  	} else {
+			// set source script - Cyrillic
+			$str_from = array ("Џа", "Џе", "Џи", "Џо", "Џу", "Ња", "Ње", "Њи", "Њо", "Њу", "Ља", "Ље", "Љи", "Љо", "Љу", "а","б","в","г","д","ђ","е","ж","з","и","ј","к","л","љ","м","н","њ","о","п","р","с","т","ћ","у","ф","х","ц","ч","џ","ш","А","Б","В","Г","Д","Ђ","Е","Ж","З","И","Ј","К","Л","Љ","М","Н","Њ","О","П","Р","С","Т","Ћ","У","Ф","Х","Ц","Ч","Џ","Ш","č","Č","ć","Ć","ž","Ž","đ","Đ","š","Š");
+			// set destination script to UTF-8 Serbian Latin
+			$str_to = array ("Dža", "Dže", "Dži", "Džo", "Džu", "Nja", "Nje", "Nji", "Njo", "Nju", "Lja", "Lje", "Lji", "Ljo", "Lju", "a","b","v","g","d","đ","e","ž","z","i","j","k","l","lj","m","n","nj","o","p","r","s","t","ć","u","f","h","c","č","dž","š","A","B","V","G","D","Đ","E","Ž","Z","I","J","K","L","Lj","M","N","Nj","O","P","R","S","T","Ć","U","F","H","C","Č","Dž","Š","č","Č","ć","Ć","ž","Ž","đ","Đ","š","Š");
+			// do simple string replace
+			return str_replace($str_from, $str_to, $text);
+		} else {
+			// if there no need for transliteration, print out unchanged text
 			return $text;
-		} // wpt_lang == lat|asc
-	} // function ztranslit()
+		} // wpt_lang == lat
+	} // function do_wptranslit()
 } // class wp_translit
+
+// Function to get language from Accept Language headers
+function hdr_lang() {
+	// get language from HTTP headers and split it to array
+	$languages = split(',', $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+	$hdr_lang = "";
+	
+	// check first defined Accept Language
+	$hlang = $languages[0];
+	if ( ereg("^(sr|mk|bg|ru)", $hlang) && $hbr == 0 )
+        {
+		// for Serbian, Macedonian, Bulgarian and Russian set 'cir'
+		$hdr_lang = "cir";
+	} else {
+		// for all other set to 'lat'
+		$hdr_lang = "lat";
+	}
+	// set global variable
+	$GLOBALS['hdr_lang'] = $hdr_lang;
+}
 
 $_wp_wp_translit =& new wp_translit;
 

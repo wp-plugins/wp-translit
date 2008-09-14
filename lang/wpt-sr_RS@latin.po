@@ -1,0 +1,73 @@
+# Serbian translation of WP Translit.
+# Copyright (C) 2008 Aleksandar Urošević <urke@users.sourceforge.net>
+# This file is distributed under the same license as the WordPress package.
+# Aleksandar Urošević <urke@users.sourceforg.net>, 2008.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Translit\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-09-13 18:22+0200\n"
+"PO-Revision-Date: 2008-09-13 11:25+0200\n"
+"Last-Translator: Aleksandar Urošević <urke@users.sourceforge.net>\n"
+"Language-Team: Serbian <gnome@prevod.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../wp-translit.php:92
+msgid "Archives"
+msgstr "Strana arhive"
+
+#: ../wp-translit.php:86
+msgid "Dropdown list"
+msgstr "Padajuća lista"
+
+#: ../wp-translit.php:88
+msgid "Floating widget"
+msgstr "Plutajući vidžet"
+
+#: ../wp-translit.php:89
+msgid "Home"
+msgstr "Naslovna strana"
+
+#: ../wp-translit.php:91
+msgid "Page"
+msgstr "Strana"
+
+#: ../wp-translit.php:93
+msgid "Search"
+msgstr "Strana pretrage"
+
+#: ../wp-translit.php:90
+msgid "Single Post"
+msgstr "Članak"
+
+#: ../wp-translit.php:85
+msgid "Style"
+msgstr "Stil"
+
+#: ../wp-translit.php:83
+msgid "Title"
+msgstr "Naslov"
+
+#: ../wp-translit.php:87
+msgid "Unordered list"
+msgstr "Nabrajanje"
+
+#: ../wp-translit.php:88
+msgid "on which page to display floating widget"
+msgstr "na kojoj strani će biti prikazan plutajući vidžet"
+
+#~ msgid "404 Template"
+#~ msgstr "Strana greške"
+
+#~ msgid "Categories"
+#~ msgstr "Strana kategorija"
+
+#~ msgid "Front page"
+#~ msgstr "Posebna naslovna strana"
+
+#~ msgid "Tags"
+#~ msgstr "Oznake"

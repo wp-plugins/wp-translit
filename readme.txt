@@ -16,10 +16,9 @@ This is performed by checking `Accept Language HTTP headers`. If visitor don't h
 
 If visitor wish Cyrillic or Latin script on demand, then he can make choose from widget/floating widget (dropdown list or links list).
 
-== Features ==
-
+= Features =
 * All transliteation is in one way: Cyrillic -> Latin
-* Transliterate all text on pages, including widget titles, header and footer, posts, pages and comments
+* Transliterate all text on pages, including widget titles, header and footer, posts, pages, comments and feeds
 * Automaticaly display original (Cyrillic) script for Serbian, Macedonian, Bulgarian and Russian visitors
 * Automaticaly display Latin script for all other languages (including Croatian, Slovenian, English and others)
 * Choose style of widget - dropdown list or unordered list

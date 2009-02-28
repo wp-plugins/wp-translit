@@ -1,3 +1,7 @@
+2009-02-28 0.3.7 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Fixed handling of default permalink broken in 0.3.6
+
 2009-02-28 0.3.6 Aleksandar Urošević <urke@users.sourceforge.net>
 
 	* Fixed 'headers already sent' problem (I think so?)

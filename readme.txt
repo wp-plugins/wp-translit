@@ -4,7 +4,7 @@ Donate link: http://urosevic.net/kontakt
 Tags: language, automatic, transliteration, translation, translit, sidebar, widget, plugin, serbian, cyrillic, latin, multilanguage
 Requires at least: 2.6
 Tested up to: 2.7.1
-Stable tag: 0.3.6
+Stable tag: 0.3.7
 
 Transliterate text in posts and pages from Serbian Cyrillic to Latin script. Visitor can select output script from widget.
 

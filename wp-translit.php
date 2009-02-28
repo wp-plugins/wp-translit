@@ -20,7 +20,7 @@ Plugin Name: WP Translit
 Plugin URI: http://blog.urosevic.net/wordpress/wp-translit/
 Description: Transliterate text from Serbian Cyrillic to Latin script in posts and pages.
 Author: Aleksandar Urošević
-Version: 0.3.6
+Version: 0.3.7
 Author URI: http://urosevic.net
 
 Thanks to:
@@ -153,7 +153,7 @@ function wpt_widget_links()
 	}
 	
 	// check if exist $_GET
-	if ( $_GET > 0 ) {
+	if ( count($_GET) > 0 ) {
 		if ( !$_GET['lng'] ) {
 			$cc1 = '<a href="http://'.$current_uri.'&lng=cir">';
 			$lc1 = '<a href="http://'.$current_uri.'&lng=lat">';

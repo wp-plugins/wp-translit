@@ -4,57 +4,29 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
-msgid	""
-msgstr	"Project-Id-Version: PACKAGE VERSION\n"
-	"Report-Msgid-Bugs-To: \n"
-	"POT-Creation-Date: 2008-09-13 18:22+0200\n"
-	"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-	"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-	"Language-Team: LANGUAGE <LL@li.org>\n"
-	"MIME-Version: 1.0\n"
-	"Content-Type: text/plain; charset=CHARSET\n"
-	"Content-Transfer-Encoding: 8bit\n"
+msgid   ""
+msgstr  "Project-Id-Version: PACKAGE VERSION\n"
+        "Report-Msgid-Bugs-To: \n"
+        "POT-Creation-Date: 2009-02-28 11:26+0100\n"
+        "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+        "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+        "Language-Team: LANGUAGE <LL@li.org>\n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=CHARSET\n"
+        "Content-Transfer-Encoding: 8bit\n"
 
-#: ../wp-translit.php:92
-msgid	"Archives"
-msgstr	""
+#: ../wp-translit.php:80
+msgid   "Dropdown list"
+msgstr  ""
 
-#: ../wp-translit.php:86
-msgid	"Dropdown list"
-msgstr	""
+#: ../wp-translit.php:79
+msgid   "Style"
+msgstr  ""
 
-#: ../wp-translit.php:88
-msgid	"Floating widget"
-msgstr	""
+#: ../wp-translit.php:77
+msgid   "Title"
+msgstr  ""
 
-#: ../wp-translit.php:89
-msgid	"Home"
-msgstr	""
-
-#: ../wp-translit.php:91
-msgid	"Page"
-msgstr	""
-
-#: ../wp-translit.php:93
-msgid	"Search"
-msgstr	""
-
-#: ../wp-translit.php:90
-msgid	"Single Post"
-msgstr	""
-
-#: ../wp-translit.php:85
-msgid	"Style"
-msgstr	""
-
-#: ../wp-translit.php:83
-msgid	"Title"
-msgstr	""
-
-#: ../wp-translit.php:87
-msgid	"Unordered list"
-msgstr	""
-
-#: ../wp-translit.php:88
-msgid	"on which page to display floating widget"
-msgstr	""
+#: ../wp-translit.php:81
+msgid   "Unordered list"
+msgstr  ""

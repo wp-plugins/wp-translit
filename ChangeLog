@@ -1,3 +1,21 @@
+2009-03-04 0.3.7.1 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Fixed code that broke title rewrite for All-in-One-SEO
+	
+2009-02-28 0.3.7 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Fixed handling of default permalink broken in 0.3.6
+
+2009-02-28 0.3.6 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Fixed 'headers already sent' problem (I think so?)
+	* Fixed wrong handling of default permalink
+	* Dropped floating widget part (do we really need this? I think no.)
+
+2008-09-15 0.3.5a  Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Added transliteation to feeds
+
 2008-09-14 0.3.5 Aleksandar Urošević <urke@users.sourceforge.net>
 
 	* New public release 0.3.5

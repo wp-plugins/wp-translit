@@ -1,3 +1,7 @@
+2009-03-04 0.3.7.1 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Fixed code that broke title rewrite for All-in-One-SEO
+	
 2009-02-28 0.3.7 Aleksandar Urošević <urke@users.sourceforge.net>
 
 	* Fixed handling of default permalink broken in 0.3.6

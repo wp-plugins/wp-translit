@@ -56,7 +56,7 @@ If visitor wish Cyrillic or Latin script on demand, then he can make choose from
 6. Add widget `WP Translit` to sidebar or `<?php do_action("wptranslit"); ?>` in template
 
 = Српски =
-1, Улогујте се на свој Вордпрес блог и отворите страницу `Додаци` → `Додај нови`
+1. Улогујте се на свој Вордпрес блог и отворите страницу `Додаци` → `Додај нови`
 2. Унесите `wp translit` у поље и кликните на дугме `Претражи додатке`
 3. Кликните на везу `Поставите сада` испод назива додатка `WP Translit`
 4. Укључите додатак кликом на везу `Укључи додатак`

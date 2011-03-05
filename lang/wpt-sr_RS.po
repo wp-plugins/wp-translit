@@ -1,36 +1,170 @@
 # translation of wpt-sr_RS.po to Serbian
 # Serbian translation of WP Translit.
-# Copyright (C) 2008-2009 Aleksandar Urošević <urke@users.sourceforge.net>
+# Copyright (C) 2008-2011 Aleksandar Urošević <urke@users.sourceforge.net>
 # This file is distributed under the same license as the WordPress package.
 #
-# Aleksandar Urošević <urke@users.sourceforge.net>, 2008, 2009.
+# Aleksandar Urošević <urke@users.sourceforge.net>, 2008, 2009, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: wpt-sr_RS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-28 11:26+0100\n"
-"PO-Revision-Date: 2009-02-28 11:37+0100\n"
+"POT-Creation-Date: 2011-03-05 14:52+0100\n"
+"PO-Revision-Date: 2011-03-05 15:26+0100\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sourceforge.net>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Textdomain-Support: yes\n"
 
-#: ../wp-translit.php:80
-msgid "Dropdown list"
-msgstr "Падајућа листа"
+#@ default
+#: wp-translit.php:58
+#: wp-translit.php:174
+msgid "Settings"
+msgstr "Подешавања"
 
-#: ../wp-translit.php:79
-msgid "Style"
-msgstr "Стил"
+#@ wpt
+#: wp-translit.php:64
+msgid "WP Translit Options"
+msgstr "ВП Транслит поставке"
 
-#: ../wp-translit.php:77
+#@ wpt
+#: wp-translit.php:64
+#: wp-translit.php:95
+msgid "WP Translit"
+msgstr "WP Translit"
+
+#@ wpt
+#: wp-translit.php:100
+msgid "This plugin displays links to transliterate text from Serbian Cyrillic to Serbian Latin script, or translate it with Google Translate to chosen language."
+msgstr "Ово проширење приказује везе за пресловљавање текста из српске ћирилице у латиницу, одн. превод на неки од изабраних језика помоћу сервиса Google Translate."
+
+#@ wpt
+#: wp-translit.php:101
+msgid "Usage"
+msgstr "Употреба"
+
+#@ wpt
+#: wp-translit.php:102
+msgid "Embed next code in template files at place where you wish to display WP Translit inline links (but not in Loop!):"
+msgstr "Уградите следећи код у датотеке шаблона на место на коме желите да буду приказане једнолинијске везе (немојте додавати унутар loop-а):"
+
+#@ wpt
+#: wp-translit.php:105
+msgid "Widget"
+msgstr "Виџет"
+
+#@ wpt
+#: wp-translit.php:108
 msgid "Title"
 msgstr "Наслов"
 
-#: ../wp-translit.php:81
+#@ wpt
+#: wp-translit.php:112
+msgid "Style"
+msgstr "Стил"
+
+#@ wpt
+#: wp-translit.php:114
 msgid "Unordered list"
 msgstr "Набрајање"
+
+#@ wpt
+#: wp-translit.php:115
+msgid "Dropdown box"
+msgstr "Падајућа листа"
+
+#@ wpt
+#: wp-translit.php:120
+msgid "Inline"
+msgstr "Једнолинијске везе"
+
+#@ wpt
+#: wp-translit.php:123
+msgid "Inline delimiter"
+msgstr "Раздвајач веза"
+
+#@ wpt
+#: wp-translit.php:128
+msgid "Google Translate"
+msgstr "Google Translate"
+
+#@ wpt
+#: wp-translit.php:131
+msgid "Display GT link"
+msgstr "Прикажи везу за превод"
+
+#@ wpt
+#: wp-translit.php:135
+msgid "Link title"
+msgstr "Текст везе"
+
+#@ wpt
+#: wp-translit.php:139
+msgid "Target language"
+msgstr "Циљни језик"
+
+#@ wpt
+#: wp-translit.php:141
+msgid "English"
+msgstr "енглески"
+
+#@ wpt
+#: wp-translit.php:142
+msgid "German"
+msgstr "немачки"
+
+#@ wpt
+#: wp-translit.php:143
+msgid "French"
+msgstr "француски"
+
+#@ wpt
+#: wp-translit.php:144
+msgid "Russian"
+msgstr "руски"
+
+#@ default
+#: wp-translit.php:154
+msgid "Save Changes"
+msgstr "Сачувај измене"
+
+#@ wpt
+#: wp-translit.php:158
+msgid "Support"
+msgstr "Подршка"
+
+#@ wpt
+#: wp-translit.php:159
+#, php-format
+msgid "For all questions, feature request and communication with author and users of this plugin, use our <a href=\"%s\">support forum</a>."
+msgstr "За сва питања, предлоге унапређења и сву комуникацију са аутором и осталим корисницима проишрења користите <a href=\"%s\">форум за подршку</a>."
+
+#@ wpt
+#: wp-translit.php:160
+msgid "Donate"
+msgstr "Донација"
+
+#@ wpt
+#: wp-translit.php:161
+#, php-format
+msgid "If you like <a href=\"%s\">WP Translit</a> and my other <a href=\"%s\">WordPress extensions</a>, feel free to support my work with <a href=\"%s\">donation</a>."
+msgstr "Ако сматрате да је проширење <a href=\"%s\">WP Translit</a> корисно за Ваш пројекат, или неко друго моје  <a href=\"%s\">проширење за Вордпрес</a>, можете подржати мој рад <a href=\"%s\">донацијом</a>."
+
+#@ wpt
+#: wp-translit.php:174
+#, php-format
+msgid "Go to %s to configure it."
+msgstr "%s проширења."
+
+#@ wpt
+#: wp-translit.php:99
+msgid "Current version:"
+msgstr "Тренутна верзија:"
+
+#@ wpt
+#: wp-translit.php:173
+msgid "This widget will display WP Translit in sidebar."
+msgstr "Ово проширење приказује ВП Транслит у бочном менију на блогу."
 

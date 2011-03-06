@@ -48,7 +48,7 @@ If visitor wish Cyrillic or Latin script on demand, then he can make choose from
 
 == Installation ==
 
-1. Login to admin panel of your WP blog and go to `Plugins` -> `Add New`
+1. Login to admin panel of your WP blog and go to `Plugins` → `Add New`
 2. Enter `wp-translit` and click on `Search` button
 3. Click on link `Install` bellow plugin name `WP Translit`
 4. Activate plugin by clicking on link `Activate`

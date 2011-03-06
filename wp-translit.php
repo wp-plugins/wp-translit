@@ -20,7 +20,7 @@ Plugin Name: WP Translit
 Plugin URI: http://blog.urosevic.net/wordpress/wp-translit/
 Description: Transliterate text from Serbian Cyrillic to Latin script in posts, pages and feeds. After installation check <a href="options-general.php?page=wp-translit/wp-translit.php">Settings</a>.
 Author: Aleksandar Urošević
-Version: 0.3.8
+Version: 0.3.8.1
 Author URI: http://urosevic.net
 
 Thanks to:
@@ -30,7 +30,7 @@ Thanks to:
 	http://us3.php.net/ob_start
 */
 
-$wpt_version = "0.3.8";
+$wpt_version = "0.3.8.1";
 
 add_action('init', 'wpt_init');
 add_action('plugins_loaded', 'wpt_register_widget');
@@ -68,11 +68,14 @@ function wpt_options() {
 	global $wpt_version;
 	if ( $_POST['wpt-submit'] )	{
 		$options['widget_title']     = htmlspecialchars($_POST['wpt-wtitle']);
-		$options['widget_style']     = htmlspecialchars($_POST['wpt-wstyle']);
-		$options['gt_show']          = htmlspecialchars($_POST['wpt-gtshow']);
-		$options['gt_lang']          = htmlspecialchars($_POST['wpt-gtlang']);
+		$options['widget_style']     = $_POST['wpt-wstyle'];
+		$options['gt_show']          = $_POST['wpt-gtshow'];
+		$options['gt_lang']          = $_POST['wpt-gtlang'];
 		$options['gt_text']          = htmlspecialchars($_POST['wpt-gttext']);
+		$options['inline_class']     = strip_tags($_POST['wpt-iclass']);
 		$options['inline_delimiter'] = htmlspecialchars($_POST['wpt-idelim']);
+		$options['inline_prefix']    = htmlspecialchars($_POST['wpt-iprefix']);
+		$options['inline_suffix']    = htmlspecialchars($_POST['wpt-isuffix']);
 		update_option("wptranslit", $options);
 	}
 
@@ -85,7 +88,10 @@ function wpt_options() {
 			"gt_show"          => true,
 			"gt_lang"          => "en",
 			"gt_text"          => "Read in bad English",
-			"inline_delimiter" => " | "
+			"inline_delimiter" => " | ",
+			"inline_prefix"    => "",
+			"inline_suffix"    => "",
+			"inline_class"     => "wpt_inline"
 		);
 		update_option("wptranslit", $options);
 	}
@@ -106,7 +112,7 @@ function wpt_options() {
 	<table class="form-table">
 		<tr valign="top">
 			<th scope="row"><label><?php _e("Title", "wpt"); ?></label></th>
-			<td><input type="text" value="<?php echo $options['widget_title']; ?>" name="wpt-wtitle" id="wpt-wtitle" size="20" /></td>
+			<td><input type="text" value="<?php echo strip_tags(stripslashes($options['widget_title'])); ?>" name="wpt-wtitle" id="wpt-wtitle" size="20" /></td>
 		</tr>
 		<tr valign="top">
 			<th scope="row"><label><?php _e("Style", "wpt"); ?></label></th>
@@ -120,8 +126,20 @@ function wpt_options() {
 	<h3><?php _e("Inline", "wpt"); ?></h3>
 	<table class="form-table">
 		<tr valign="top">
+			<th scope="row"><label><?php _e("Inline DIV class", "wpt"); ?></label></th>
+			<td><input type="text" value="<?php echo strip_tags(stripslashes($options['inline_class'])); ?>" name="wpt-iclass" id="wpt-iclass" /> <em><?php _e("CSS class can be used in style.css to style inline links box.", "wpt"); ?></em></td>
+		</tr>
+		<tr valign="top">
+			<th scope="row"><label><?php _e("Inline prefix", "wpt"); ?></label></th>
+			<td><input type="text" value="<?php echo strip_tags(stripslashes($options['inline_prefix'])); ?>" name="wpt-iprefix" id="wpt-iprefix" /> <em><?php _e("Text to put in front of inline links.", "wpt"); ?></em></td>
+		</tr>
+		<tr valign="top">
+			<th scope="row"><label><?php _e("Inline suffix", "wpt"); ?></label></th>
+			<td><input type="text" value="<?php echo strip_tags(stripslashes($options['inline_suffix'])); ?>" name="wpt-isuffix" id="wpt-isuffix" /> <em><?php _e("Additional text or links to append behind inline links. HTML allowed.", "wpt"); ?></em></td>
+		</tr>
+		<tr valign="top">
 			<th scope="row"><label><?php _e("Inline delimiter", "wpt"); ?></label></th>
-			<td><input type="text" value="<?php echo ($options['inline_delimiter']); ?>" name="wpt-idelim" id="wpt-idelim" /></td>
+			<td><input type="text" value="<?php echo strip_tags(stripslashes($options['inline_delimiter'])); ?>" name="wpt-idelim" id="wpt-idelim" /> <em><?php _e("Set of characters to put in middle of links.", "wpt"); ?></em></td>
 		</tr>
 	</table>
 
@@ -133,7 +151,7 @@ function wpt_options() {
 		</tr>
 		<tr valign="top">
 			<th scope="row"><label><?php _e("Link title", "wpt"); ?></label></th>
-			<td><input type="text" value="<?php echo $options['gt_text']; ?>" name="wpt-gttext" id="wpt-gttext" size="20" /></td>
+			<td><input type="text" value="<?php echo strip_tags(stripslashes($options['gt_text'])); ?>" name="wpt-gttext" id="wpt-gttext" size="20" /></td>
 		</tr>
 		<tr valign="top">
 			<th scope="row"><label><?php _e("Target language", "wpt"); ?></label></th>
@@ -187,14 +205,17 @@ function wpt_widget($args) {
 			"gt_show"          => true,
 			"gt_lang"          => "en",
 			"gt_text"          => "Read in bad English",
-			"inline_delimiter" => " | "
+			"inline_delimiter" => " | ",
+			"inline_prefix"    => "",
+			"inline_suffix"    => "",
+			"inline_class"     => "wpt_inline"
 		);
 		update_option("wptranslit", $options);
 	}
 
 	echo $before_widget;
 	echo $before_title;
-	echo $options['widget_title'];
+	echo strip_tags(stripslashes($options['widget_title']));
 	echo $after_title;
 
 	// Which wiget style to print out?
@@ -313,15 +334,27 @@ function wpt_inline() {
 		default:    $cc1 = "<strong>"; $cc2 = "</strong>";
 	}
 
-	// Display GT link?
+	// Get inline options
 	$options = get_option("wptranslit");
-	$ldelim = $options['inline_delimiter'];
+	// 
+	$iclass  = strip_tags(stripslashes($options['inline_class']));
+	if ( $iclass ) { $iclass = 'class="'.$iclass.'"'; }
+
+	// get delimiter
+	$idelim  = stripslashes($options['inline_delimiter']);
+
+	// get prefix & suffix
+	$iprefix = htmlspecialchars_decode(stripslashes($options['inline_prefix']));
+	$isuffix = htmlspecialchars_decode(stripslashes($options['inline_suffix']));
+	if ( $isuffix ) { $isuffix = $idelim.$isuffix; }
+	
+	// Display GT link?
 	if ( $options['gt_show'] ) {
-		$gtlink = $ldelim.'<a href="http://translate.google.com/translate?prev=_t&amp;ie=UTF-8&amp;sl=sr&amp;tl='.$options['gt_lang'].'&amp;u='.$this_page_url.'">'.$options['gt_text'].'</a>';
+		$gtlink = $idelim.'<a href="http://translate.google.com/translate?prev=_t&amp;ie=UTF-8&amp;sl=sr&amp;tl='.$options['gt_lang'].'&amp;u='.$this_page_url.'">'.$options['gt_text'].'</a>';
 	}
 	print <<<EOF
 <!-- WP Translit Widget (inline) -->
-<div id="wptranslit_inline">${cc1}&#x045b;&#x0438;&#x0440;&#x0438;&#x043b;&#x0438;&#x0446;&#x0430;${cc2}$ldelim${lc1}latinica${lc2}$gtlink</div>
+<div $iclass>${iprefix}${cc1}&#x045b;&#x0438;&#x0440;&#x0438;&#x043b;&#x0438;&#x0446;&#x0430;${cc2}${idelim}${lc1}latinica${lc2}${gtlink}${isuffix}</div>
 <!-- /WP Translit Widget (inline) -->
 EOF;
 }

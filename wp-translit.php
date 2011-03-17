@@ -76,6 +76,7 @@ function wpt_options() {
 		$options['inline_delimiter'] = htmlspecialchars($_POST['wpt-idelim']);
 		$options['inline_prefix']    = htmlspecialchars($_POST['wpt-iprefix']);
 		$options['inline_suffix']    = htmlspecialchars($_POST['wpt-isuffix']);
+		$options['inline_ashow']     = $_POST['wpt-ashow'];
 		update_option("wptranslit", $options);
 	}
 
@@ -91,7 +92,8 @@ function wpt_options() {
 			"inline_delimiter" => " | ",
 			"inline_prefix"    => "",
 			"inline_suffix"    => "",
-			"inline_class"     => "wpt_inline"
+			"inline_class"     => "wpt_inline",
+			"inline_ashow"     => true
 		);
 		update_option("wptranslit", $options);
 	}
@@ -141,6 +143,10 @@ function wpt_options() {
 			<th scope="row"><label><?php _e("Inline delimiter", "wpt"); ?></label></th>
 			<td><input type="text" value="<?php echo strip_tags(stripslashes($options['inline_delimiter'])); ?>" name="wpt-idelim" id="wpt-idelim" /> <em><?php _e("Set of characters to put in middle of links.", "wpt"); ?></em></td>
 		</tr>
+		<tr valign="top">
+			<th scope="row"><label><?php _e("Display active", "wpt"); ?></label></th>
+			<td><input type="checkbox" <?php echo ($options['inline_ashow']) ? ' checked="checked"' : ''; ?> name="wpt-ashow" id="wpt-ashow" /> <em><?php _e("Enable this to display active script link.", "wpt"); ?></em></td>
+		</tr>
 	</table>
 
 	<h3><?php _e("Google Translate", "wpt"); ?></h3>
@@ -159,7 +165,8 @@ function wpt_options() {
 				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="en" <?php if ( $options['gt_lang'] == "en" ) { echo "checked"; } ?>/> <?php _e("English", "wpt"); ?><br/>
 				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="de" <?php if ( $options['gt_lang'] == "de" ) { echo "checked"; } ?>/> <?php _e("German", "wpt"); ?><br/>
 				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="fr" <?php if ( $options['gt_lang'] == "fr" ) { echo "checked"; } ?>/> <?php _e("French", "wpt"); ?><br/>
-				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="ru" <?php if ( $options['gt_lang'] == "ru" ) { echo "checked"; } ?>/> <?php _e("Russian", "wpt"); ?>
+				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="ru" <?php if ( $options['gt_lang'] == "ru" ) { echo "checked"; } ?>/> <?php _e("Russian", "wpt"); ?><br/>
+				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="it" <?php if ( $options['gt_lang'] == "it" ) { echo "checked"; } ?>/> <?php _e("Italian", "wpt"); ?>
 			</td>
 		</tr>
 
@@ -208,7 +215,8 @@ function wpt_widget($args) {
 			"inline_delimiter" => " | ",
 			"inline_prefix"    => "",
 			"inline_suffix"    => "",
-			"inline_class"     => "wpt_inline"
+			"inline_class"     => "wpt_inline",
+			"inline_ashow"     => true
 		);
 		update_option("wptranslit", $options);
 	}
@@ -305,6 +313,8 @@ EOF;
 function wpt_inline() {
 	$current_uri = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 	$this_page_url = "http://" . $current_uri;
+	$cirt = "&#x045b;&#x0438;&#x0440;&#x0438;&#x043b;&#x0438;&#x0446;&#x0430;";
+	$latt = "latinica";
 
 	if ( isset($_REQUEST['lng']) ) {
 		$wpt_lang = $_REQUEST['lng'];
@@ -317,26 +327,23 @@ function wpt_inline() {
 	// check if exist $_GET
 	if ( count($_GET) > 0 ) {
 		if ( !$_GET['lng'] ) {
-			$cc1 = '<a href="http://'.$current_uri.'&lng=cir">';
-			$lc1 = '<a href="http://'.$current_uri.'&lng=lat">';
+			$cirl = "http://${current_uri}&lng=cir";
+			$latl = "http://${current_uri}&lng=lat";
 		} else {
-			$cc1 = '<a href="http://'.str_replace( array("lng=lat", "lng=cir"), 'lng=cir', $current_uri).'">';
-			$lc1 = '<a href="http://'.str_replace( array("lng=lat", "lng=cir"), 'lng=lat', $current_uri).'">';
+			$cirl = "http://".str_replace( array("lng=lat", "lng=cir"), 'lng=cir', $current_uri);
+			$latl = "http://".str_replace( array("lng=lat", "lng=cir"), 'lng=lat', $current_uri);
 		}
 	} else {
-		$cc1 = '<a href="?lng=cir">';
-		$lc1 = '<a href="?lng=lat">';
+		$cirl = "?lng=cir";
+		$latl = "?lng=lat";
 	}
-	$lc2 = $cc2 = "</a>";
-	
-	switch($wpt_lang) {
-		case "lat": $lc1 = "<strong>"; $lc2 = "</strong>"; break;
-		default:    $cc1 = "<strong>"; $cc2 = "</strong>";
-	}
+
+	$cir = '<a href="'.$cirl.'">'.$cirt.'</a>';
+	$lat = '<a href="'.$latl.'">'.$latt.'</a>';
 
 	// Get inline options
 	$options = get_option("wptranslit");
-	// 
+
 	$iclass  = strip_tags(stripslashes($options['inline_class']));
 	if ( $iclass ) { $iclass = 'class="'.$iclass.'"'; }
 
@@ -347,14 +354,25 @@ function wpt_inline() {
 	$iprefix = htmlspecialchars_decode(stripslashes($options['inline_prefix']));
 	$isuffix = htmlspecialchars_decode(stripslashes($options['inline_suffix']));
 	if ( $isuffix ) { $isuffix = $idelim.$isuffix; }
-	
+
+	// Display active script?
+	switch($wpt_lang) {
+		case "lat":
+			if ( $options['inline_ashow'] ) { $lat = "$idelim<strong>$lat</strong>"; } else { $lat = ""; }
+			break;
+		case "cir":
+			if ( $options['inline_ashow'] ) { $cir = "<strong>$cir</strong>$idelim"; } else { $cir = ""; }
+			break;
+	}
+
 	// Display GT link?
 	if ( $options['gt_show'] ) {
 		$gtlink = $idelim.'<a href="http://translate.google.com/translate?prev=_t&amp;ie=UTF-8&amp;sl=sr&amp;tl='.$options['gt_lang'].'&amp;u='.$this_page_url.'">'.$options['gt_text'].'</a>';
 	}
+// <div $iclass>${iprefix}${cc1}&#x045b;&#x0438;&#x0440;&#x0438;&#x043b;&#x0438;&#x0446;&#x0430;${cc2}${idelim}${lc1}latinica${lc2}${gtlink}${isuffix}</div>
 	print <<<EOF
 <!-- WP Translit Widget (inline) -->
-<div $iclass>${iprefix}${cc1}&#x045b;&#x0438;&#x0440;&#x0438;&#x043b;&#x0438;&#x0446;&#x0430;${cc2}${idelim}${lc1}latinica${lc2}${gtlink}${isuffix}</div>
+<div $iclass>${iprefix}${cir}${lat}${gtlink}${isuffix}</div>
 <!-- /WP Translit Widget (inline) -->
 EOF;
 }

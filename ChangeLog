@@ -1,5 +1,6 @@
-2011-03-06 0.3.8.1 Aleksandar Urošević <urke@users.sourceforge.net>
+2011-03-17 0.3.8.2 Aleksandar Urošević <urke@users.sourceforge.net>
 
+	* Added option to hide active script link in inline links
 	* Added custom class, prefix and suffix to inline links
 
 2011-03-05 0.3.8 Aleksandar Urošević <urke@users.sourceforge.net>

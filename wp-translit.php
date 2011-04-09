@@ -118,8 +118,8 @@ function wpt_options() {
 		<tr valign="top">
 			<th scope="row"><label><?php _e("Style", "wpt"); ?></label></th>
 			<td>
-				<input type="radio" id="wpt-wstyle" name="wpt-wstyle" value="list" <?php if ( $options['widget_style'] == "list" ) { echo "checked"; } ?>/> <?php _e("Unordered list", "wpt"); ?><br/>
-				<input type="radio" id="wpt-wstyle" name="wpt-wstyle" value="drop" <?php if ( $options['widget_style'] == "drop" ) { echo "checked"; } ?>/> <?php _e("Dropdown box", "wpt"); ?><br/>
+				<input type="radio" id="wpt-wstyle" name="wpt-wstyle" value="list" <?php checked( $options['widget_style'], "list" ); ?>/> <?php _e("Unordered list", "wpt"); ?><br/>
+				<input type="radio" id="wpt-wstyle" name="wpt-wstyle" value="drop" <?php checked( $options['widget_style'], "drop" ); ?>/> <?php _e("Dropdown box", "wpt"); ?><br/>
 			</td>
 		</tr>
 	</table>

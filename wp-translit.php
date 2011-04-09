@@ -18,9 +18,9 @@
 
 Plugin Name: WP Translit
 Plugin URI: http://blog.urosevic.net/wordpress/wp-translit/
-Description: Transliterate text from Serbian Cyrillic to Latin script in posts, pages and feeds. After installation check <a href="options-general.php?page=wp-translit/wp-translit.php">Settings</a>.
+Description: Transliterate text from Serbian Cyrillic to Latin script in posts, pages and feeds. After installation check <a href="options-general.php?page=wp-translit">Settings</a>.
 Author: Aleksandar Urošević
-Version: 0.3.8.1
+Version: 0.3.9
 Author URI: http://urosevic.net
 
 Thanks to:
@@ -30,7 +30,7 @@ Thanks to:
 	http://us3.php.net/ob_start
 */
 
-$wpt_version = "0.3.8.1";
+define( 'WPT_VER', "0.3.9" );
 
 add_action('init', 'wpt_init');
 add_action('plugins_loaded', 'wpt_register_widget');
@@ -49,34 +49,33 @@ if ( is_admin() ) {
 }
 
 function wpt_init() {
-	load_plugin_textdomain( 'wpt', PLUGINDIR . '/' . dirname(plugin_basename(__FILE__)) . '/lang' );
+	load_plugin_textdomain( 'wpt', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 	hdr_lang(); // get default language from HTTP headers
 	wpt_set_lang(); // determine output script
 }
 
 function wptConfigLink( $links ) { 
-  $settings_link = '<a href="options-general.php?page=wp-translit/wp-translit.php">'.__('Settings').'</a>'; 
+  $settings_link = '<a href="options-general.php?page=wp-translit">'.__('Settings').'</a>'; 
   array_unshift( $links, $settings_link ); 
   return $links; 
 }
 
 function wpt_menu() {
-	add_options_page(__('WP Translit Options', 'wpt'), __('WP Translit', 'wpt'), 8, __FILE__, 'wpt_options');
+	add_options_page(__('WP Translit Options', 'wpt'),  __('WP Translit', 'wpt'), 'manage_options', 'wp-translit', 'wpt_options');
 }
 
 function wpt_options() {
-	global $wpt_version;
-	if ( $_POST['wpt-submit'] )	{
+	if ( isset($_POST['wpt-submit']) )	{
 		$options['widget_title']     = htmlspecialchars($_POST['wpt-wtitle']);
 		$options['widget_style']     = $_POST['wpt-wstyle'];
-		$options['gt_show']          = $_POST['wpt-gtshow'];
+		$options['gt_show']          = isset($_POST['wpt-gtshow']);
 		$options['gt_lang']          = $_POST['wpt-gtlang'];
 		$options['gt_text']          = htmlspecialchars($_POST['wpt-gttext']);
 		$options['inline_class']     = strip_tags($_POST['wpt-iclass']);
 		$options['inline_delimiter'] = htmlspecialchars($_POST['wpt-idelim']);
 		$options['inline_prefix']    = htmlspecialchars($_POST['wpt-iprefix']);
 		$options['inline_suffix']    = htmlspecialchars($_POST['wpt-isuffix']);
-		$options['inline_ashow']     = $_POST['wpt-ashow'];
+		$options['inline_ashow']     = isset($_POST['wpt-ashow']);
 		update_option("wptranslit", $options);
 	}
 
@@ -104,7 +103,7 @@ function wpt_options() {
 
 	<form method="post" action="" id="wpt-conf">
 	<?php if (function_exists('wp_nonce_field')) { wp_nonce_field('wpt-updatesettings'); } ?>
-	<p><?php echo __("Current version:", "wpt")." <strong>$wpt_version</strong>"; ?></p>
+	<p><?php echo __("Current version:", "wpt")." <strong>".WPT_VER."</strong>"; ?></p>
 	<p><?php _e('This plugin displays links to transliterate text from Serbian Cyrillic to Serbian Latin script, or translate it with Google Translate to chosen language.', 'wpt'); ?></p>
 	<h3><?php _e("Usage", "wpt"); ?></h3>
 	<p><?php _e('Embed next code in template files at place where you wish to display WP Translit inline links (but not in Loop!):', 'wpt'); ?></p>
@@ -145,7 +144,7 @@ function wpt_options() {
 		</tr>
 		<tr valign="top">
 			<th scope="row"><label><?php _e("Display active", "wpt"); ?></label></th>
-			<td><input type="checkbox" <?php echo ($options['inline_ashow']) ? ' checked="checked"' : ''; ?> name="wpt-ashow" id="wpt-ashow" /> <em><?php _e("Enable this to display active script link.", "wpt"); ?></em></td>
+			<td><input type="checkbox" <?php checked( (bool) $options['inline_ashow'], true ); ?> name="wpt-ashow" id="wpt-ashow" /> <em><?php _e("Enable this to display active script link.", "wpt"); ?></em></td>
 		</tr>
 	</table>
 
@@ -153,7 +152,7 @@ function wpt_options() {
 	<table class="form-table">
 		<tr valign="top">
 			<th scope="row"><label><?php _e("Display GT link", "wpt"); ?></label></th>
-			<td><input type="checkbox" <?php echo ($options['gt_show']) ? ' checked="checked"' : ''; ?> name="wpt-gtshow" id="wpt-gtshow" /></td>
+			<td><input type="checkbox" <?php checked( (bool) $options['gt_show'], true ); ?> name="wpt-gtshow" id="wpt-gtshow" /></td>
 		</tr>
 		<tr valign="top">
 			<th scope="row"><label><?php _e("Link title", "wpt"); ?></label></th>
@@ -162,11 +161,11 @@ function wpt_options() {
 		<tr valign="top">
 			<th scope="row"><label><?php _e("Target language", "wpt"); ?></label></th>
 			<td>
-				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="en" <?php if ( $options['gt_lang'] == "en" ) { echo "checked"; } ?>/> <?php _e("English", "wpt"); ?><br/>
-				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="de" <?php if ( $options['gt_lang'] == "de" ) { echo "checked"; } ?>/> <?php _e("German", "wpt"); ?><br/>
-				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="fr" <?php if ( $options['gt_lang'] == "fr" ) { echo "checked"; } ?>/> <?php _e("French", "wpt"); ?><br/>
-				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="ru" <?php if ( $options['gt_lang'] == "ru" ) { echo "checked"; } ?>/> <?php _e("Russian", "wpt"); ?><br/>
-				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="it" <?php if ( $options['gt_lang'] == "it" ) { echo "checked"; } ?>/> <?php _e("Italian", "wpt"); ?>
+				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="en" <?php checked( $options['gt_lang'], "en" ); ?>/> <?php _e("English", "wpt"); ?><br/>
+				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="de" <?php checked( $options['gt_lang'], "de" ); ?>/> <?php _e("German", "wpt"); ?><br/>
+				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="fr" <?php checked( $options['gt_lang'], "fr" ); ?>/> <?php _e("French", "wpt"); ?><br/>
+				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="ru" <?php checked( $options['gt_lang'], "ru" ); ?>/> <?php _e("Russian", "wpt"); ?><br/>
+				<input type="radio" id="wpt-gtlang" name="wpt-gtlang" value="it" <?php checked( $options['gt_lang'], "it" ); ?>/> <?php _e("Italian", "wpt"); ?>
 			</td>
 		</tr>
 
@@ -190,13 +189,13 @@ function wpt_options() {
 
 /* Widget stuff */
 function wpt_register_widget() {
-	register_sidebar_widget('WP Translit', 'wpt_widget');
-	register_widget_control('WP Translit', 'wpt_widget_control');
+	wp_register_sidebar_widget( 'wpt', 'WP Translit', 'wpt_widget' );
+	wp_register_widget_control( 'wpt', 'WP Translit', 'wpt_widget_control' );
 }
 
 function wpt_widget_control() {
 	echo "<p>".__("This widget will display WP Translit in sidebar.", "wpt")."</p>";
-	echo "<p>".sprintf(__("Go to %s to configure it.", "wpt"), '<a href="options-general.php?page=wp-translit/wp-translit.php">'.__("Settings").'</a>')."</p>";
+	echo "<p>".sprintf(__("Go to %s to configure it.", "wpt"), '<a href="options-general.php?page=wp-translit">'.__("Settings").'</a>')."</p>";
 } // function wpt_widget_control
 
 // Functions to print widget in sidebar
@@ -238,6 +237,7 @@ function wpt_widget($args) {
 function wpt_widget_list() {
 	$current_uri = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 	$this_page_url = "http://" . $current_uri;
+	$gtlink = "";
 
 	if ( isset($_REQUEST['lng']) ) {
 		$wpt_lang = $_REQUEST['lng'];
@@ -249,7 +249,7 @@ function wpt_widget_list() {
 	
 	// check if exist $_GET
 	if ( count($_GET) > 0 ) {
-		if ( !$_GET['lng'] ) {
+		if ( !isset($_GET['lng']) ) {
 			$cc1 = '<a href="http://'.$current_uri.'&lng=cir">';
 			$lc1 = '<a href="http://'.$current_uri.'&lng=lat">';
 		} else {
@@ -293,17 +293,18 @@ function wpt_widget_drop() {
 		$wpt_lang = $GLOBALS['hdr_lang'];
 	}
 
+	$lc = $cc = false;
 	switch($wpt_lang) {
-		case "lat": $lc1 = 'selected="selected"'; break;
-		default:    $cc1 = 'selected="selected"';
+		case "lat": $lc = 'selected="selected"'; break;
+		default:    $cc = 'selected="selected"';
 	}
 
 	print <<<EOF
 <!-- WP Translit Widget (drop) -->
 <form action="" method="post"><fieldset style="border: 0;">
 <select name="lng" id="lng" onchange="this.form.submit()">
-<option value="cir" $cc1>&#x045b;&#x0438;&#x0440;&#x0438;&#x043b;&#x0438;&#x0446;&#x0430;</option>
-<option value="lat" $lc1>latinica</option>
+<option value="cir" $cc>&#x045b;&#x0438;&#x0440;&#x0438;&#x043b;&#x0438;&#x0446;&#x0430;</option>
+<option value="lat" $lc>latinica</option>
 </select>
 </fieldset></form>
 <!-- /WP Translit Widget (drop) -->
@@ -315,6 +316,7 @@ function wpt_inline() {
 	$this_page_url = "http://" . $current_uri;
 	$cirt = "&#x045b;&#x0438;&#x0440;&#x0438;&#x043b;&#x0438;&#x0446;&#x0430;";
 	$latt = "latinica";
+	$gtlink = "";
 
 	if ( isset($_REQUEST['lng']) ) {
 		$wpt_lang = $_REQUEST['lng'];
@@ -326,7 +328,7 @@ function wpt_inline() {
 	
 	// check if exist $_GET
 	if ( count($_GET) > 0 ) {
-		if ( !$_GET['lng'] ) {
+		if ( !isset($_GET['lng']) ) {
 			$cirl = "http://${current_uri}&lng=cir";
 			$latl = "http://${current_uri}&lng=lat";
 		} else {
@@ -385,12 +387,10 @@ function hdr_lang() {
 	
 	// check first defined Accept Language
 	$hlang = $languages[0];
-	if ( ereg("^(sr|mk|bg|ru)", $hlang) && $hbr == 0 )
-        {
-		// for Serbian, Macedonian, Bulgarian and Russian set 'cir'
+	if ( ereg("^(sr|mk|bg|ru)", $hlang) ) // && $hbr == 0 )
+	{ // for Serbian, Macedonian, Bulgarian and Russian set 'cir'
 		$hdr_lang = "cir";
-	} else {
-		// for all other set to 'lat'
+	} else { // for all other set to 'lat'
 		$hdr_lang = "lat";
 	}
 	// set global variable

@@ -1,3 +1,15 @@
+2011-03-17 0.3.8.2 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Added option to hide active script link in inline links
+	* Added custom class, prefix and suffix to inline links
+
+2011-03-05 0.3.8 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Added support for inline links
+	* Added custom delimiter for inline list
+	* Added custom Google Translate target language with custom link text (list and inline, dropdown has not supoprted)
+	* Moved settings from widget to plugin page
+
 2009-03-04 0.3.7.1 Aleksandar Urošević <urke@users.sourceforge.net>
 
 	* Fixed code that broke title rewrite for All-in-One-SEO

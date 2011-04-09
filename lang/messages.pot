@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: PACKAGE VERSION\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2011-03-05 14:52+0100\n"
+        "POT-Creation-Date: 2011-03-06 10:49+0100\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,124 +16,155 @@ msgstr  "Project-Id-Version: PACKAGE VERSION\n"
         "Content-Type: text/plain; charset=CHARSET\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: ../wp-translit.php:58 ../wp-translit.php:174
-msgid   "Settings"
+#: ../wp-translit.php:138
+msgid   "Additional text or links to append behind inline links. HTML allowed."
 msgstr  ""
 
-#: ../wp-translit.php:64
-msgid   "WP Translit Options"
+#: ../wp-translit.php:130
+msgid   "CSS class can be used in style.css to style inline links box."
 msgstr  ""
 
-#: ../wp-translit.php:64 ../wp-translit.php:95
-msgid   "WP Translit"
+#: ../wp-translit.php:105
+msgid   "Current version:"
 msgstr  ""
 
-#: ../wp-translit.php:99
-#, php-format
-msgid   "Current version: <strong>%s</strong>"
+#: ../wp-translit.php:149
+msgid   "Display GT link"
 msgstr  ""
 
-#: ../wp-translit.php:100
-msgid   "This plugin displays links to transliterate text from Serbian "
-        "Cyrillic to Serbian Latin script, or translate it with Google "
-        "Translate to chosen language."
+#: ../wp-translit.php:178
+msgid   "Donate"
 msgstr  ""
 
-#: ../wp-translit.php:101
-msgid   "Usage"
+#: ../wp-translit.php:121
+msgid   "Dropdown box"
 msgstr  ""
 
-#: ../wp-translit.php:102
+#: ../wp-translit.php:108
 msgid   "Embed next code in template files at place where you wish to display "
         "WP Translit inline links (but not in Loop!):"
 msgstr  ""
 
-#: ../wp-translit.php:105
-msgid   "Widget"
-msgstr  ""
-
-#: ../wp-translit.php:108
-msgid   "Title"
-msgstr  ""
-
-#: ../wp-translit.php:112
-msgid   "Style"
-msgstr  ""
-
-#: ../wp-translit.php:114
-msgid   "Unordered list"
-msgstr  ""
-
-#: ../wp-translit.php:115
-msgid   "Dropdown box"
-msgstr  ""
-
-#: ../wp-translit.php:120
-msgid   "Inline"
-msgstr  ""
-
-#: ../wp-translit.php:123
-msgid   "Inline delimiter"
-msgstr  ""
-
-#: ../wp-translit.php:128
-msgid   "Google Translate"
-msgstr  ""
-
-#: ../wp-translit.php:131
-msgid   "Display GT link"
-msgstr  ""
-
-#: ../wp-translit.php:135
-msgid   "Link title"
-msgstr  ""
-
-#: ../wp-translit.php:139
-msgid   "Target language"
-msgstr  ""
-
-#: ../wp-translit.php:141
+#: ../wp-translit.php:159
 msgid   "English"
 msgstr  ""
 
-#: ../wp-translit.php:142
-msgid   "German"
-msgstr  ""
-
-#: ../wp-translit.php:143
-msgid   "French"
-msgstr  ""
-
-#: ../wp-translit.php:144
-msgid   "Russian"
-msgstr  ""
-
-#: ../wp-translit.php:154
-msgid   "Save Changes"
-msgstr  ""
-
-#: ../wp-translit.php:158
-msgid   "Support"
-msgstr  ""
-
-#: ../wp-translit.php:159
+#: ../wp-translit.php:177
 #, php-format
 msgid   "For all questions, feature request and communication with author and "
         "users of this plugin, use our <a href=\"%s\">support forum</a>."
 msgstr  ""
 
-#: ../wp-translit.php:160
-msgid   "Donate"
+#: ../wp-translit.php:161
+msgid   "French"
 msgstr  ""
 
-#: ../wp-translit.php:161
+#: ../wp-translit.php:160
+msgid   "German"
+msgstr  ""
+
+#: ../wp-translit.php:192
+#, php-format
+msgid   "Go to %s to configure it."
+msgstr  ""
+
+#: ../wp-translit.php:146
+msgid   "Google Translate"
+msgstr  ""
+
+#: ../wp-translit.php:179
 #, php-format
 msgid   "If you like <a href=\"%s\">WP Translit</a> and my other <a href=\"%s"
         "\">WordPress extensions</a>, feel free to support my work with <a "
         "href=\"%s\">donation</a>."
 msgstr  ""
 
-#: ../wp-translit.php:174
-#, php-format
-msgid   "Go to %s to configure it."
+#: ../wp-translit.php:126
+msgid   "Inline"
+msgstr  ""
+
+#: ../wp-translit.php:129
+msgid   "Inline DIV class"
+msgstr  ""
+
+#: ../wp-translit.php:141
+msgid   "Inline delimiter"
+msgstr  ""
+
+#: ../wp-translit.php:133
+msgid   "Inline prefix"
+msgstr  ""
+
+#: ../wp-translit.php:137
+msgid   "Inline suffix"
+msgstr  ""
+
+#: ../wp-translit.php:153
+msgid   "Link title"
+msgstr  ""
+
+#: ../wp-translit.php:162
+msgid   "Russian"
+msgstr  ""
+
+#: ../wp-translit.php:172
+msgid   "Save Changes"
+msgstr  ""
+
+#: ../wp-translit.php:142
+msgid   "Set of characters to put in middle of links."
+msgstr  ""
+
+#: ../wp-translit.php:58 ../wp-translit.php:192
+msgid   "Settings"
+msgstr  ""
+
+#: ../wp-translit.php:118
+msgid   "Style"
+msgstr  ""
+
+#: ../wp-translit.php:176
+msgid   "Support"
+msgstr  ""
+
+#: ../wp-translit.php:157
+msgid   "Target language"
+msgstr  ""
+
+#: ../wp-translit.php:134
+msgid   "Text to put in front of inline links."
+msgstr  ""
+
+#: ../wp-translit.php:106
+msgid   "This plugin displays links to transliterate text from Serbian "
+        "Cyrillic to Serbian Latin script, or translate it with Google "
+        "Translate to chosen language."
+msgstr  ""
+
+#: ../wp-translit.php:191
+msgid   "This widget will display WP Translit in sidebar."
+msgstr  ""
+
+#: ../wp-translit.php:114
+msgid   "Title"
+msgstr  ""
+
+#: ../wp-translit.php:120
+msgid   "Unordered list"
+msgstr  ""
+
+#: ../wp-translit.php:107
+msgid   "Usage"
+msgstr  ""
+
+#: ../wp-translit.php:64 ../wp-translit.php:101
+msgid   "WP Translit"
+msgstr  ""
+
+#: ../wp-translit.php:64
+msgid   "WP Translit Options"
+msgstr  ""
+
+#: ../wp-translit.php:111
+msgid   "Widget"
 msgstr  ""

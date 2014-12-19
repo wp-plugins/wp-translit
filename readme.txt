@@ -1,10 +1,10 @@
 === WP Translit ===
 Contributors: urkekg
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q6Q762MQ97XJ6
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RQZS3U57E7F5U
 Tags: language, automatic, transliteration, translation, translate, translit, sidebar, widget, plugin, serbian, cyrillic, latin, script, multilanguage
-Requires at least: 3.0
-Tested up to: 3.1
-Stable tag: 0.3.9
+Requires at least: 3.9
+Tested up to: 4.1
+Stable tag: 0.4.1
 
 Transliterate text in posts and pages from Serbian Cyrillic to Latin script. Visitor can select output script from widget.
 
@@ -18,14 +18,14 @@ If visitor wish Cyrillic or Latin script on demand, then he can make choose from
 
 = Features =
 
-* All transliteation is in one way: Cyrillic → Latin.
-* Transliterate all text on pages, including widget titles, header and footer, posts, pages, comments and feeds.
+* All transliteation has done in one way: Cyrillic → Latin.
+* Transliterate all text on pages; including widget titles, header and footer, posts, pages, comments and even feeds.
 * Automatically display original (Cyrillic) script to visitors with Serbian, Macedonian, Bulgarian and Russian as preferred language set in web browser.
 * Automatically display Latin script for all other languages (including Croatian, Slovenian, English and others).
-* Choose style of widget - dropdown list or unordered list.
+* Choose style of widget: inline, unordered list or dropdown list.
 * Place inline links by adding `do_action("wptranslit")` anywhere in template.
 * Set custom widget title.
-* Can display link to translate page to English, German, French or Russian language with Google Translate.
+* Optional link to translate page to English, German, French, Russian, Chinese (Simplified and Traditional), Greek, Hungarian, Korean, Spanish or Turkish language with Google Translate.
 * WP Translit support `gettext` localisation.
 
 = Српски =
@@ -67,15 +67,24 @@ If visitor wish Cyrillic or Latin script on demand, then he can make choose from
 == Frequently Asked Questions ==
 
 = Which text is tansliterated? =
-WP Translit threat only Serbian Cyrillic characters in text and transliterate it to Serbian Latin characters.
+WP Translit threat only Serbian Cyrillic characters in text and transliterate it to Serbian Latin characters. IF you need support for other Cyrillic languages, contact me.
 
 = Do this plugin transliterate in opposite way? =
-No. WP Translit don't made transliteration from Latin to Cyrillic script. That is not even planned to be implemented.
+No. WP Translit does not transliterate from Latin to Cyrillic script. That is not even planned to be implemented (it's not impossible, so you can [Request a quote](http://urosevic.net/wordpress/contact/) and I'll develop that functionality for you).
 
 = Where is help in Serbian language? =
-WP Translit page in Serbian Cyrillic is placed on my blog [Zapisi](http://blog.urosevic.net/wordpress/wp-translit/ "WP Translit plugin page").
+WP Translit page in Serbian Cyrillic is placed at [DevYard](http://urosevic.net/wordpress/plugins/wp-translit/ "WP Translit plugin page").
 
 == Changelog ==
+
+= 0.4.1 (2014-12-16) =
+* Add: General settings for widget
+* Add: More Google Translate target languages: Chinese (Simplified and Traditional), Greek, Hungarian, Korean, Spanish and Turkish
+* Change: look is any of browser languages is cyrillic, not only 1st language
+* Improve: Multi instance widget with selector for style and widget title
+* Improve: Rewrite to OOP and code cleanup
+* Tested on WordPress 4.1
+* Reorganized repo assets, added banner and icon
 
 = 0.3.9 (2011-04-09) =
 * Fixed all debug errors
@@ -90,7 +99,7 @@ WP Translit page in Serbian Cyrillic is placed on my blog [Zapisi](http://blog.u
 
 = 0.3.7.1 (2009-03-04) =
 * Fixed code that broke title rewrite for All-in-One-SEO
-	
+
 = 0.3.7 (2009-02-28) =
 * Fixed handling of default permalink broken in 0.3.6
 
@@ -136,5 +145,5 @@ WP Translit page in Serbian Cyrillic is placed on my blog [Zapisi](http://blog.u
 
 1. WP Translit on Plugins page
 2. WP Translit Settings page
-3. WP Translit Widget panel
-4. WP Translit in action
+3. WP Translit Widget
+4. WP Translit in Customizer Live Editor

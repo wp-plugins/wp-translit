@@ -1,0 +1,68 @@
+2011-03-17 0.3.8.2 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Added option to hide active script link in inline links
+	* Added custom class, prefix and suffix to inline links
+
+2011-03-05 0.3.8 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Added support for inline links
+	* Added custom delimiter for inline list
+	* Added custom Google Translate target language with custom link text (list and inline, dropdown has not supoprted)
+	* Moved settings from widget to plugin page
+
+2009-03-04 0.3.7.1 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Fixed code that broke title rewrite for All-in-One-SEO
+	
+2009-02-28 0.3.7 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Fixed handling of default permalink broken in 0.3.6
+
+2009-02-28 0.3.6 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Fixed 'headers already sent' problem (I think so?)
+	* Fixed wrong handling of default permalink
+	* Dropped floating widget part (do we really need this? I think no.)
+
+2008-09-15 0.3.5a  Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Added transliteation to feeds
+
+2008-09-14 0.3.5 Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* New public release 0.3.5
+	* Floating widget CSS fixed
+
+2008-09-13 0.3.4 (internal) Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Added Floating widget settings (on/off on: home, single, page, archive and search)
+	* Unified function and variable names
+	* Added gettext localisation
+
+2008-09-10 0.3.3 (internal) Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Added Floating widget for non-index (w/o sidebar) pages
+	* Removed YUSCII script (now only Cyrillic and Latin)
+
+2008-09-08 0.3.2 (internal) Aleksandar Urošević <urke@users.sourceforge.net>
+
+	* Added configurable widget - manual set title and select widget style (list or links)
+	  (thanks to http://lonewolf-online.net/computers/wordpress/create-widgets-control-panels/)
+	* Added transliteration of gettextable objects
+	  (thanks to http://kimmo.suominen.com/sw/srlatin/)
+	* Added transliteration based on Accept Language HTTP header if there not cookie or
+	  request language (thanks to Danilo Šegan for pointing on this)
+	* Simplified function for generating widhets
+	* Rewritten buffer transliteration code
+	* No more need for manual code inserting in header.php template
+	* Added specified two character transliteration pairs (Dž*, Nj* and Lj*)
+
+2008-06-17 0.3.1 Aleksandar Urošević <urke@users.sourceforge.net>
+
+        * Adding first version to WordPress SVN
+        * Changed first option title to „изворно (ћирилица)“
+        * Enabled YUSCII to Latin script conversion
+
+2008-06-16 0.3 Aleksandar Urošević <urke@users.sourceforge.net>
+
+        * Initial public release 0.3

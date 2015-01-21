@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: language, automatic, transliteration, translation, translate, translit, sidebar, widget, plugin, serbian, cyrillic, latin, script, multilanguage
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 0.4.1
+Stable tag: 0.4.1.1
 
 Transliterate text in posts and pages from Serbian Cyrillic to Latin script. Visitor can select output script from widget.
 
@@ -76,6 +76,9 @@ No. WP Translit does not transliterate from Latin to Cyrillic script. That is no
 WP Translit page in Serbian Cyrillic is placed at [DevYard](http://urosevic.net/wordpress/plugins/wp-translit/ "WP Translit plugin page").
 
 == Changelog ==
+
+= 0.4.1.1 (2015-01-21) =
+* Fix: forgotten error_log output
 
 = 0.4.1 (2014-12-16) =
 * Add: General settings for widget

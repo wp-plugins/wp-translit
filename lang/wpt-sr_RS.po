@@ -1,0 +1,221 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wpt-sr_RS\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-06 10:49+0100\n"
+"PO-Revision-Date: 2011-03-06 10:51+0100\n"
+"Last-Translator: Aleksandar Urošević <urke@users.sourceforge.net>\n"
+"Language-Team: Serbian <gnom@prevod.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: wp-translit.php:139
+#@ wpt
+msgid "Additional text or links to append behind inline links. HTML allowed."
+msgstr "Додатни текст или везе за дописивање иза једнолинијских веза. Може да садржи HTML."
+
+#: wp-translit.php:131
+#@ wpt
+msgid "CSS class can be used in style.css to style inline links box."
+msgstr "CSS класа може да се користи у style.css датотеци за стилизовање контејнера једнолинијских веза."
+
+#: wp-translit.php:106
+#@ wpt
+msgid "Current version:"
+msgstr "Тренутна верзија:"
+
+#: wp-translit.php:154
+#@ wpt
+msgid "Display GT link"
+msgstr "Прикажи везу за превод"
+
+#: wp-translit.php:184
+#@ wpt
+msgid "Donate"
+msgstr "Донација"
+
+#: wp-translit.php:122
+#@ wpt
+msgid "Dropdown box"
+msgstr "Падајућа листа"
+
+#: wp-translit.php:109
+#@ wpt
+msgid "Embed next code in template files at place where you wish to display WP Translit inline links (but not in Loop!):"
+msgstr "Уградите следећи код у датотеке шаблона на место на коме желите да буду приказане једнолинијске везе (немојте додавати унутар loop-а):"
+
+#: wp-translit.php:164
+#@ wpt
+msgid "English"
+msgstr "енглески"
+
+#: wp-translit.php:183
+#, php-format
+#@ wpt
+msgid "For all questions, feature request and communication with author and users of this plugin, use our <a href=\"%s\">support forum</a>."
+msgstr "За сва питања, предлоге унапређења и сву комуникацију са аутором и осталим корисницима додатка користите <a href=\"%s\">форум за подршку</a>."
+
+#: wp-translit.php:166
+#@ wpt
+msgid "French"
+msgstr "француски"
+
+#: wp-translit.php:165
+#@ wpt
+msgid "German"
+msgstr "немачки"
+
+#: wp-translit.php:198
+#, php-format
+#@ wpt
+msgid "Go to %s to configure it."
+msgstr "%s додатка."
+
+#: wp-translit.php:151
+#@ wpt
+msgid "Google Translate"
+msgstr "Google Translate"
+
+#: wp-translit.php:185
+#, php-format
+#@ wpt
+msgid "If you like <a href=\"%s\">WP Translit</a> and my other <a href=\"%s\">WordPress extensions</a>, feel free to support my work with <a href=\"%s\">donation</a>."
+msgstr "Ако сматрате да је додатак <a href=\"%s\">WP Translit</a> користан за Ваш пројекат, или неки други мој  <a href=\"%s\">додатак за Вордпрес</a>, можете подржати мој рад <a href=\"%s\">донацијом</a>."
+
+#: wp-translit.php:127
+#@ wpt
+msgid "Inline"
+msgstr "Једнолинијске везе"
+
+#: wp-translit.php:130
+#@ wpt
+msgid "Inline DIV class"
+msgstr "Класа контејнера"
+
+#: wp-translit.php:142
+#@ wpt
+msgid "Inline delimiter"
+msgstr "Раздвајач веза"
+
+#: wp-translit.php:134
+#@ wpt
+msgid "Inline prefix"
+msgstr "Префикс"
+
+#: wp-translit.php:138
+#@ wpt
+msgid "Inline suffix"
+msgstr "Суфикс"
+
+#: wp-translit.php:158
+#@ wpt
+msgid "Link title"
+msgstr "Текст везе"
+
+#: wp-translit.php:167
+#@ wpt
+msgid "Russian"
+msgstr "руски"
+
+#: wp-translit.php:178
+#@ default
+msgid "Save Changes"
+msgstr "Сачувај измене"
+
+#: wp-translit.php:143
+#@ wpt
+msgid "Set of characters to put in middle of links."
+msgstr "Низ карактера који ће бити коришћен за раздвајање веза."
+
+#: wp-translit.php:58
+#: wp-translit.php:198
+#@ default
+msgid "Settings"
+msgstr "Подешавања"
+
+#: wp-translit.php:119
+#@ wpt
+msgid "Style"
+msgstr "Стил"
+
+#: wp-translit.php:182
+#@ wpt
+msgid "Support"
+msgstr "Подршка"
+
+#: wp-translit.php:162
+#@ wpt
+msgid "Target language"
+msgstr "Циљни језик"
+
+#: wp-translit.php:135
+#@ wpt
+msgid "Text to put in front of inline links."
+msgstr "Текст који ће бити исписан испред једнолинијских веза."
+
+#: wp-translit.php:107
+#@ wpt
+msgid "This plugin displays links to transliterate text from Serbian Cyrillic to Serbian Latin script, or translate it with Google Translate to chosen language."
+msgstr "Овај додатак приказује везе за пресловљавање текста из српске ћирилице у латиницу, одн. превод на неки од изабраних језика помоћу сервиса Google Translate."
+
+#: wp-translit.php:197
+#@ wpt
+msgid "This widget will display WP Translit in sidebar."
+msgstr "Овај додатак приказује WP Translit у бочном менију на блогу."
+
+#: wp-translit.php:115
+#@ wpt
+msgid "Title"
+msgstr "Наслов"
+
+#: wp-translit.php:121
+#@ wpt
+msgid "Unordered list"
+msgstr "Набрајање"
+
+#: wp-translit.php:108
+#@ wpt
+msgid "Usage"
+msgstr "Употреба"
+
+#: wp-translit.php:64
+#: wp-translit.php:102
+#@ wpt
+msgid "WP Translit"
+msgstr "WP Translit"
+
+#: wp-translit.php:64
+#@ wpt
+msgid "WP Translit Options"
+msgstr "WP Translit поставке"
+
+#: wp-translit.php:112
+#@ wpt
+msgid "Widget"
+msgstr "Виџет"
+
+#: wp-translit.php:146
+#@ wpt
+msgid "Display active"
+msgstr "Прикажи везу активног писма"
+
+#: wp-translit.php:147
+#@ wpt
+msgid "Enable this to display active script link."
+msgstr "Омогућите ову опцију за приказ везе активног писма."
+
+#: wp-translit.php:168
+#@ wpt
+msgid "Italian"
+msgstr "италијански"
+

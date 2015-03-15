@@ -4,7 +4,7 @@ Plugin Name: WP Translit
 Plugin URI: http://urosevic.net/wordpress/plugins/wp-translit/
 Description: Transliterate text from Serbian Cyrillic to Latin script in posts, pages and feeds.
 Author: Aleksandar Urošević
-Version: 0.4.1.1
+Version: 0.4.2
 Author URI: http://urosevic.net
 
 Thanks to:
@@ -32,10 +32,10 @@ Thanks to:
  */
 
 // define some constants
-define( 'WPT_VER', "0.4.1.1" );
+define( 'WPT_VER', "0.4.2" );
 define( 'WPT_SLUG', "wp-translit" );
 
-if ( !class_exists('WP_TRANSLIT') )
+if ( ! class_exists('WP_TRANSLIT') )
 {
 
 /**
@@ -47,8 +47,7 @@ class WP_TRANSLIT
 	private $slug;
 	private $defaults;
 
-	function __construct()
-	{
+	function __construct() {
 
 		$this->slug = WPT_SLUG;
 		$this->defaults = self::defaults();
@@ -66,10 +65,9 @@ class WP_TRANSLIT
 
 		add_filter( 'plugin_row_meta', array($this, 'plugin_row_meta'), 10, 2 );
 
-	} // eom __construct
+	} // END function __construct()
 
-	function init()
-	{
+	function init() {
 
 		load_plugin_textdomain( 'wpt', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 
@@ -79,16 +77,17 @@ class WP_TRANSLIT
 		// determine output script
 		$this->set_cookie();
 
-		// setup translit hooks
-		$this->wp_translit();
+		// setup translit hooks (only on frontend)
+		if ( ! is_admin() ) {
+			$this->wp_translit();
+		}
 
-	} // eom init
+	} // END function init()
 
 	/**
 	 * Defaults
 	 */
-	public static function defaults()
-	{
+	public static function defaults() {
 
 		$defaults = array(
 			'default_lng'      => 'cir',
@@ -107,20 +106,18 @@ class WP_TRANSLIT
 		$options = wp_parse_args(get_option('wptranslit'), $defaults);
 		return $options;
 
-	} // eom defaults
+	} // END function defaults()
 
 	/* ============================== LINKS ============================== */
-	function add_action_links( $links )
-	{
+	function add_action_links( $links ) {
 
 		$new_links = '<a href="options-general.php?page='.$this->slug.'">'.__('Settings').'</a>';
 		array_unshift( $links, $new_links );
 
 		return $links;
-	}
+	} // END function add_action_links()
 
-	function plugin_row_meta( $links, $file )
-	{
+	function plugin_row_meta( $links, $file ) {
 
 		if ( strpos( $file, basename(__FILE__) ) !== false ) {
 			$new_links = array(
@@ -133,17 +130,22 @@ class WP_TRANSLIT
 
 		return $links;
 
-	} // eom plugin_row_meta
+	} // END function plugin_row_meta()
 
 	/* ============================== WP Translit Master Kung-Fu ============================== */
 	/**
 	 * Prepare hooks for transliteration
 	 */
-	function wp_translit()
-	{
+	function wp_translit() {
 
-		add_action('wp_head', array(&$this,'buffer_start'));
-		add_action('wp_footer', array(&$this,'buffer_end'));
+		// Add support for Customizr theme
+		if ( defined('CUSTOMIZR_VER') ) {
+			add_action('__before_body', array(&$this,'buffer_start'));
+			add_action('__after_body', array(&$this,'buffer_end'));
+		} else {
+			add_action('wp_head', array(&$this,'buffer_start'));
+			add_action('wp_footer', array(&$this,'buffer_end'));
+		}
 
 		// add transliteration to feed
 		add_action('feed_head', array(&$this,'buffer_start'), 1);
@@ -153,15 +155,15 @@ class WP_TRANSLIT
 		add_action('rss2_head', array(&$this,'buffer_start'), 1);
 		add_action('rss2_footer', array(&$this,'buffer_end'), 1);
 
-	} // eom wp_translit
+	} // END function wp_translit()
 
 	function buffer_start() {
 		ob_start( array(&$this,"do_wptranslit") );
-	}
+	} // END function buffer_start()
 
 	function buffer_end() {
 		ob_end_flush();
-	}
+	} // END function buffer_end()
 
 	/**
 	 * Actual test transliteration goes here
@@ -199,7 +201,7 @@ class WP_TRANSLIT
 			return $text;
 		} // wpt_lang == lat
 
-	} // eom do_wptranslit
+	} // END function do_wptranslit()
 
 	/* ============================== HELPERS ============================== */
 
@@ -236,14 +238,13 @@ class WP_TRANSLIT
 		// set global variable
 		$GLOBALS['hdr_lang'] = $hdr_lang;
 
-	} // eom header_lang
+	} // END function header_lang()
 
 	/**
 	 * Set website target language to cookie wpt_lang
 	 * @return [type] [description]
 	 */
-	function set_cookie()
-	{
+	function set_cookie() {
 
 		if ( isset($_REQUEST['lng']) && ( $_REQUEST['lng'] == "cir" || $_REQUEST['lng'] == "lat" ) )
 		{
@@ -256,7 +257,7 @@ class WP_TRANSLIT
 			setcookie("wpt_lang", $this->defaults['default_lng'], strtotime("+3 months"), "/");
 		}
 
-	} // eom set_cookie
+	} // END function set_cookie()
 
 	/**
 	 * Get the current Url taking into account Https and Port
@@ -265,8 +266,7 @@ class WP_TRANSLIT
 	 * @param   none
 	 * @return  URL of current page
 	 */
-	public static function getCurrentUrl()
-	{
+	public static function getCurrentUrl() {
 
 		$url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
 		$url .= '://' . $_SERVER['SERVER_NAME'];
@@ -275,7 +275,8 @@ class WP_TRANSLIT
 
 		return $url;
 
-	}
+	} // END public static function getCurrentUrl()
+
 } // eo class WP_TRANSLIT
 
 } // eo class exists
